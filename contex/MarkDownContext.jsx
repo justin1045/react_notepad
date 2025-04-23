@@ -28,6 +28,14 @@ export function MarkDownProvider({ children }) {
     setActiveNoteId(newId);
   };
 
+  const deleteNote = (id) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id));
+    if (id === activeNoteId && notes.length > 1) {
+      const remaining = notes.find((note) => note.id !== id);
+      setActiveNoteId(remaining.id);
+    }
+  };
+
   const activeNote = notes.find((note) => note.id === activeNoteId);
 
   return (
@@ -38,6 +46,7 @@ export function MarkDownProvider({ children }) {
         updateNoteContent,
         addNewNote,
         setActiveNoteId,
+        deleteNote
       }}
     >
       {children}
